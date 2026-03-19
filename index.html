@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пельменный цех</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Расчёт оборудования пельменного цеха</h1>
+
+    <form id="form">
+      <fieldset>
+        <legend>Общие параметры</legend>
+        <div class="field">
+          <label for="qsut">Суточная выработка Qсут, т</label>
+          <input type="number" id="qsut" value="2" step="0.1" min="0.1" />
+        </div>
+        <div class="field">
+          <label for="t">Продолжительность смены t, ч</label>
+          <input type="number" id="t" value="8" step="0.5" min="1" />
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>I. Линия изготовления пельменей</legend>
+        <p class="formula">
+          Ртл = Qсут / (2·t) &nbsp;|&nbsp; n = ⌈ Ртл / рпа ⌉
+        </p>
+        <div class="field">
+          <label for="rpa">Производительность автомата рпа, т/ч</label>
+          <input type="number" id="rpa" value="0.15" step="0.01" min="0.01" />
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>II. Линия подготовки теста</legend>
+        <p class="formula">
+          Ртл_т = Ртл · ат / 100 &nbsp;|&nbsp; n = ⌈ Ртл_т / ртм ⌉
+        </p>
+        <div class="field">
+          <label for="at">Доля теста ат, %</label>
+          <input type="number" id="at" value="55" step="1" min="1" max="99" />
+        </div>
+        <div class="field">
+          <label for="rtm">Производительность тестомеса ртм, т/ч</label>
+          <input type="number" id="rtm" value="0.2" step="0.01" min="0.01" />
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>III. Линия подготовки фарша</legend>
+        <p class="formula">
+          аф = ам + ая + ас + асп &nbsp;|&nbsp; Ртл_ф = Ртл · аф / 100
+          &nbsp;|&nbsp; n = ⌈ Ртл_ф / рк ⌉
+        </p>
+        <div class="field">
+          <label for="am">Доля мяса ам, %</label>
+          <input type="number" id="am" value="35" step="1" min="0" />
+        </div>
+        <div class="field">
+          <label for="ay">Доля яиц ая, %</label>
+          <input type="number" id="ay" value="3" step="1" min="0" />
+        </div>
+        <div class="field">
+          <label for="as_">Доля соли ас, %</label>
+          <input type="number" id="as_" value="1.5" step="0.1" min="0" />
+        </div>
+        <div class="field">
+          <label for="asp">Доля специй асп, %</label>
+          <input type="number" id="asp" value="0.5" step="0.1" min="0" />
+        </div>
+        <div class="field">
+          <label for="rk">Производительность куттера рк, т/ч</label>
+          <input type="number" id="rk" value="0.1" step="0.01" min="0.01" />
+        </div>
+      </fieldset>
+
+      <button type="submit">Рассчитать</button>
+    </form>
+
+    <section id="results" class="hidden">
+      <h2>Результаты</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Линия</th>
+            <th>Производительность, т/ч</th>
+            <th>Количество машин, шт.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>I. Пельменные автоматы</td>
+            <td id="r-rtl">—</td>
+            <td id="r-npa">—</td>
+          </tr>
+          <tr>
+            <td>II. Тестомесильные машины</td>
+            <td id="r-rtlt">—</td>
+            <td id="r-ntm">—</td>
+          </tr>
+          <tr>
+            <td>III. Куттеры</td>
+            <td id="r-rtlf">—</td>
+            <td id="r-nk">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="note">Доля фарша аф = <span id="r-af">—</span> %</p>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
